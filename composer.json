@@ -1,0 +1,40 @@
+{
+    "name": "morningmedley/database",
+    "description": "Blade",
+    "keywords": [
+        "wordpress",
+        "morningtrain",
+        "database",
+        "medley",
+        "morningmedley"
+    ],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mathias Munk",
+            "email": "mh@morningtrain.dk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MorningMedley\\Database\\": "src/",
+            "MorningMedley\\Facades\\": "facades/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "illuminate/container": "^8|^9",
+        "illuminate/support": "^8|^9",
+        "illuminate/database": "^8|^9",
+        "illuminate/events": "^8|^9",
+        "doctrine/dbal": "^3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MorningMedley\\Database\\ServiceProvider"
+            ]
+        }
+    }
+}

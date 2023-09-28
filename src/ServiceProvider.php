@@ -3,6 +3,7 @@
 namespace MorningMedley\Database;
 
 use Illuminate\Database\Connectors\ConnectionFactory;
+use MorningMedley\Database\Classes\Cli;
 use MorningMedley\Database\Classes\DatabaseConnection;
 use MorningMedley\Database\Classes\DatabaseManager;
 use Illuminate\Database\DatabaseServiceProvider;
@@ -11,6 +12,21 @@ use MorningMedley\Facades\DB;
 
 class ServiceProvider extends DatabaseServiceProvider
 {
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__ . "/config/config.php", 'database');
+        parent::register();
+    }
+
+    public function boot()
+    {
+        parent::boot();
+        if (class_exists("\WP_CLI")) {
+            $this->app->bind('db.cli', fn($app) => new Cli($app));
+            $this->app->make('db.cli');
+        }
+    }
+
     /**
      * Register the primary database bindings.
      *
@@ -58,7 +74,7 @@ class ServiceProvider extends DatabaseServiceProvider
         $host_data = $wpdb->parse_db_host(DB_HOST);
 
         if (is_array($host_data)) {
-            list($host, $port, $socket, $is_ipv6) = $host_data;
+            [$host, $port, $socket, $is_ipv6] = $host_data;
         } else {
             // Redacted. Throw an error or something
         }

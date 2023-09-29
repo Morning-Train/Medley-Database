@@ -3,12 +3,12 @@
 namespace MorningMedley\Database;
 
 use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Filesystem\Filesystem;
 use MorningMedley\Database\Classes\Cli;
 use MorningMedley\Database\Classes\DatabaseConnection;
 use MorningMedley\Database\Classes\DatabaseManager;
 use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Database\DatabaseTransactionsManager;
-use MorningMedley\Facades\DB;
 
 class ServiceProvider extends DatabaseServiceProvider
 {
@@ -22,7 +22,7 @@ class ServiceProvider extends DatabaseServiceProvider
     {
         parent::boot();
         if (class_exists("\WP_CLI")) {
-            $this->app->bind('db.cli', fn($app) => new Cli($app));
+            $this->app->bind('db.cli', fn($app) => new Cli($app, new Filesystem));
             $this->app->make('db.cli');
         }
     }
@@ -55,8 +55,6 @@ class ServiceProvider extends DatabaseServiceProvider
         $this->app->singleton('db.transactions', function ($app) {
             return new DatabaseTransactionsManager;
         });
-
-        DB::setFacadeApplication($this->app);
     }
 
     public function createPDO(): \PDO

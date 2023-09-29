@@ -1,21 +1,24 @@
 <?php
 
-    namespace MorningMedley\Database\Classes;
+namespace MorningMedley\Database\Classes;
 
-    class DatabaseManager extends \Illuminate\Database\DatabaseManager
+use Illuminate\Database\ConnectionInterface;
+
+class DatabaseManager extends \Illuminate\Database\DatabaseManager
+{
+    private ConnectionInterface $connection;
+
+    public function connection($name = null)
     {
-        private \Illuminate\Database\ConnectionInterface $connection;
-
-        public function connection($name = null)
-        {
-            return $this->connection;
+        if ($name === 'wpdb') {
+            return $this->connections['wpdb'];
         }
 
-        /**
-         * @param  \Illuminate\Database\ConnectionInterface  $connection
-         */
-        public function setConnection(\Illuminate\Database\ConnectionInterface $connection): void
-        {
-            $this->connection = $connection;
-        }
+        return parent::connection($name);
     }
+
+    public function setWpdbConnection(ConnectionInterface $connection)
+    {
+        $this->connections['wpdb'] = $connection;
+    }
+}

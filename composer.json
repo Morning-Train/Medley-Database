@@ -18,8 +18,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "MorningMedley\\Database\\": "src/",
-            "MorningMedley\\Facades\\": "facades/"
+            "MorningMedley\\Database\\": "src/"
         }
     },
     "require": {

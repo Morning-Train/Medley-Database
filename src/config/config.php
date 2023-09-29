@@ -3,4 +3,5 @@
     'migration' => [
         'path' => 'database/migrations',
     ],
+    'default' => 'wpdb'
 ];

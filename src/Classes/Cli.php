@@ -28,7 +28,7 @@ class Cli
 
     private function getMigrationPath(): string
     {
-        return $this->app->basePath(Arr::first((array) $this->app['config']['database.migration.path']));
+        return $this->app->basePath(Arr::first((array) $this->app['config']['database.migration.paths']));
     }
 
     private function getStubsPath(): string
@@ -39,7 +39,7 @@ class Cli
     public function migrate(array $args, array $assocArray)
     {
         $options = $assocArray;
-        $paths = (array) $this->app->config['database.migration.path'];
+        $paths = (array) $this->app->config['database.migration.paths'];
 
         if (isset($options['path'])) {
             $paths = (array) $options['path'];

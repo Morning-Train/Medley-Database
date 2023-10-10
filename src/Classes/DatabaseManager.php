@@ -10,7 +10,7 @@ class DatabaseManager extends \Illuminate\Database\DatabaseManager
 
     public function connection($name = null)
     {
-        if ($name === 'wpdb') {
+        if ($name === 'wpdb' || $name === null) {
             return $this->connections['wpdb'];
         }
 

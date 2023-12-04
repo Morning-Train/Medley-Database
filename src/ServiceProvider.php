@@ -2,6 +2,7 @@
 
 namespace MorningMedley\Database;
 
+use Doctrine\DBAL\Driver\PDO\PDOException;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Filesystem\Filesystem;
 use MorningMedley\Database\Classes\Cli;
@@ -9,6 +10,7 @@ use MorningMedley\Database\Classes\DatabaseConnection;
 use MorningMedley\Database\Classes\DatabaseManager;
 use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Database\DatabaseTransactionsManager;
+use MorningMedley\Database\Classes\PDO;
 
 class ServiceProvider extends DatabaseServiceProvider
 {
@@ -57,7 +59,7 @@ class ServiceProvider extends DatabaseServiceProvider
         });
     }
 
-    public function createPDO(): \PDO
+    public function createPDO(): PDO
     {
         global $wpdb;
 
@@ -88,6 +90,9 @@ class ServiceProvider extends DatabaseServiceProvider
         }
 
         // Open the connection
-        return new \PDO($connection_str, DB_USER, DB_PASSWORD);
+        $pdo = new PDO($connection_str, DB_USER, DB_PASSWORD);
+        $pdo->setDb($wpdb);
+
+        return $pdo;
     }
 }

@@ -17,6 +17,13 @@ class ServiceProvider extends DatabaseServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . "/config/config.php", 'database');
+
+        global $wpdb;
+        if(!$wpdb->check_connection()){
+            // Database is not available. So we only want to register our config in case the system is about to cache it
+            return;
+        }
+
         parent::register();
     }
 

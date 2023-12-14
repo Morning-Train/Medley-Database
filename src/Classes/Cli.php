@@ -22,7 +22,8 @@ class Cli
         $this->app = $app;
         $this->filesystem = $filesystem;
         if (class_exists('\WP_CLI')) {
-            \WP_CLI::add_command('database', $this);
+            \WP_CLI::add_command('medley migrate', [$this, 'migrate']);
+            \WP_CLI::add_command('medley make:migration', [$this, 'makeMigration']);
         }
     }
 
@@ -84,6 +85,10 @@ class Cli
 
     public function makeMigration(array $args, array $assocArray)
     {
+        if (empty($args[0])) {
+            \WP_CLI::error('Please supply a name for this migration');
+        }
+
         $name = Str::snake(trim($args[0]));
 
         $table = $assocArray['table'] ?? false;
@@ -101,7 +106,6 @@ class Cli
             $table = 'table';
         }
 
-        
         $creator = $this->app->makeWith(MigrationCreator::class,
             ['files' => $this->filesystem, 'customStubPath' => $this->getStubsPath()]);
         $file = $creator->create(

@@ -1,4 +1,4 @@
-# Morningmedley Application Container
+# Morningmedley Database
 
 Illuminate Migrations and Eloquent for Morningmedley.
 

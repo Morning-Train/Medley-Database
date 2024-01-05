@@ -1,14 +1,11 @@
 {
     "name": "morningmedley/database",
-    "description": "Blade",
+    "description": "Illuminate Migrations and Eloquent for Morningmedley.",
     "keywords": [
         "wordpress",
-        "morningtrain",
         "database",
-        "medley",
         "morningmedley"
     ],
-    "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
         {
@@ -30,7 +27,7 @@
         "doctrine/dbal": "^3"
     },
     "extra": {
-        "laravel": {
+        "morningmedley": {
             "providers": [
                 "MorningMedley\\Database\\ServiceProvider"
             ]

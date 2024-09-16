@@ -29,7 +29,7 @@
     "extra": {
         "morningmedley": {
             "providers": [
-                "MorningMedley\\Database\\ServiceProvider"
+                "MorningMedley\\Database\\DatabaseServiceProvider"
             ]
         }
     }

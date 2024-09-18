@@ -4,36 +4,38 @@ namespace MorningMedley\Database;
 
 use Doctrine\DBAL\Driver\PDO\PDOException;
 use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\MigrationServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 use MorningMedley\Database\Classes\Cli;
 use MorningMedley\Database\Classes\DatabaseConnection;
 use MorningMedley\Database\Classes\DatabaseManager;
-use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Database\DatabaseTransactionsManager;
 use MorningMedley\Database\Classes\PDO;
 
-class ServiceProvider extends DatabaseServiceProvider
+class DatabaseServiceProvider extends \Illuminate\Database\DatabaseServiceProvider
 {
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . "/config/config.php", 'database');
 
         global $wpdb;
-        if(!$wpdb->check_connection()){
+        if (! $wpdb->check_connection()) {
             // Database is not available. So we only want to register our config in case the system is about to cache it
             return;
         }
 
         parent::register();
+        $this->app->register(MigrationServiceProvider::class);
     }
+
+    /*public function provides()
+    {
+        return [MigrationServiceProvider::class];
+    }*/
 
     public function boot()
     {
         parent::boot();
-        if (class_exists("\WP_CLI")) {
-            $this->app->bind('db.cli', fn($app) => new Cli($app, new Filesystem));
-            $this->app->make('db.cli');
-        }
     }
 
     /**

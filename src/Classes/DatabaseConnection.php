@@ -40,6 +40,26 @@ class DatabaseConnection extends \Illuminate\Database\MySqlConnection
         parent::__construct($pdo, DB_NAME, $wpdb->prefix, []);
     }
 
+
+    public function insert($query, $bindings = [], $sequence = null)
+    {
+        return $this->run($query, $bindings, function ($query, $bindings) use ($sequence) {
+            if ($this->pretending()) {
+                return true;
+            }
+
+            $query = $this->bind_params($query, $bindings);
+
+            $this->recordsHaveBeenModified();
+
+            $result = $this->db->query($query);
+
+            $this->lastInsertId = $this->getPdo()->lastInsertId($sequence);
+
+            return (bool) $result;
+        });
+    }
+
     /**
      * Run a select statement and return a single result.
      *

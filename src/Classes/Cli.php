@@ -16,6 +16,8 @@ use Illuminate\Support\Str;
 class Cli
 {
     private Container $app;
+    
+    private Filesystem $filesystem;
 
     public function __construct(Container $app, Filesystem $filesystem)
     {

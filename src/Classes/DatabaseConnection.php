@@ -2,13 +2,7 @@
 
 namespace MorningMedley\Database\Classes;
 
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\Query\Grammars\Grammar;
-use Illuminate\Database\Schema\Grammars\MySqlGrammar;
-use Illuminate\Database\Query\Processors\Processor;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Arr;
 
 class DatabaseConnection extends \Illuminate\Database\MySqlConnection
 {
@@ -76,7 +70,7 @@ class DatabaseConnection extends \Illuminate\Database\MySqlConnection
         $result = $this->db->get_row($query);
 
         if ($result === false || $this->db->last_error) {
-            throw new QueryException($query, $bindings, new \Exception($this->db->last_error));
+            throw new QueryException('wpdb', $query, $bindings, new \Exception($this->db->last_error));
         }
 
         return $result;
@@ -99,7 +93,7 @@ class DatabaseConnection extends \Illuminate\Database\MySqlConnection
         $result = $this->db->get_results($query);
 
         if ($result === false || $this->db->last_error) {
-            throw new QueryException($query, $bindings, new \Exception($this->db->last_error));
+            throw new QueryException('wpdb', $query, $bindings, new \Exception($this->db->last_error));
         }
 
         return $result;
@@ -169,7 +163,7 @@ class DatabaseConnection extends \Illuminate\Database\MySqlConnection
         $result = $this->db->query($new_query);
 
         if ($result === false || $this->db->last_error) {
-            throw new QueryException($new_query, $bindings, new \Exception($this->db->last_error));
+            throw new QueryException('wpdb', $new_query, $bindings, new \Exception($this->db->last_error));
         }
 
         return intval($result);

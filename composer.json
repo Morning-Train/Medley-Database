@@ -20,7 +20,7 @@
     },
     "require": {
         "php": "^8.2",
-        "morningmedley/application": "^0.2",
+        "morningmedley/application": "^0.3",
         "illuminate/database": "^12.3",
         "doctrine/dbal": "^3"
     },

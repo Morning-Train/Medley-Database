@@ -11,6 +11,7 @@ use MorningMedley\Database\Classes\DatabaseConnection;
 use MorningMedley\Database\Classes\DatabaseManager;
 use Illuminate\Database\DatabaseTransactionsManager;
 use MorningMedley\Database\Classes\PDO;
+use MorningMedley\Database\Console\ModelMakeCommand;
 
 class DatabaseServiceProvider extends \Illuminate\Database\DatabaseServiceProvider
 {
@@ -23,6 +24,10 @@ class DatabaseServiceProvider extends \Illuminate\Database\DatabaseServiceProvid
             // Database is not available. So we only want to register our config in case the system is about to cache it
             return;
         }
+
+        $this->commands([
+            ModelMakeCommand::class,
+        ]);
 
         parent::register();
         $this->app->register(MigrationServiceProvider::class);

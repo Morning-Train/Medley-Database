@@ -1,10 +1,8 @@
-# Morningmedley Database
+# Database
 
-Illuminate Migrations and Eloquent for Morningmedley.
+Illuminate Migrations and Eloquent.
 
-This framework is currently in beta and full documentation is coming shortly.
+## Resources
 
-Expected 1.0.0 release mid to late 2024.
-
-## Installation
-`composer install morningmedley/medley`
+- [Documentation](https://morningmedley.dev/docs/modules/database/)
+- [Contributing](https://morningmedley.dev/docs/contributing/)
